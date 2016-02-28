@@ -36,27 +36,28 @@
   }
 </style>
 <br>
-<input type="text" id="placesearch" size='50' placeholder="ค้นหา...">
+<input type="text" id="start" size='50' value='ปูนซีเมนต์นครหลวง ตำบล ทับกวาง สระบุรี ประเทศไทย'> &nbsp ไป &nbsp
+<input type="text" id="destination" size='50' placeholder="สถานที่ส่งของ...">
 <button type="button" class="btn btn-default calulate-distance">คำนวนระยะทาง</button>
 <br><br>
 <input type="text" id="distance">
-<div id='map-canvas'></div>
-
+<br><br>
+</div> <p href=""><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></p>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6K8MpdBsL6fZBT71sFsWlbxqcJohuHY&libraries=places" type="text/javascript"></script>
 
 <script>
   //search for specific places
-  var searchBox = new google.maps.places.SearchBox(document.getElementById('placesearch'));
-
+  var searchBox = new google.maps.places.SearchBox(document.getElementById('destination'));
+  var searchOrigin = new google.maps.places.SearchBox(document.getElementById('start'));
   $('.calulate-distance').click(function() {
   //find distance in km
-    var origin = "ปูนซีเมนต์นครหลวง ตำบล ทับกวาง สระบุรี ประเทศไทย";
-    var destination = document.getElementById("placesearch").value;
+    var start = document.getElementById("start").value;
+    var destination = document.getElementById("destination").value;
 
     var service = new google.maps.DistanceMatrixService();
     service.getDistanceMatrix(
       {
-        origins: [origin],
+        origins: [start],
         destinations: [destination],
         travelMode: google.maps.TravelMode.DRIVING,
 
@@ -86,7 +87,3 @@
       }
     });
   </script>
-
-<br><br>
-
-<a href=""><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></a>
