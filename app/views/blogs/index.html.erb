@@ -37,7 +37,9 @@
 </style>
 <br>
 <input type="text" id="placesearch" size='50' placeholder="ค้นหา...">
-<button type="button">ระยะทาง</button>
+<button type="button" class="btn btn-default calulate-distance">คำนวนระยะทาง</button>
+<br><br>
+<input type="text" id="distance">
 <div id='map-canvas'></div>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAb6K8MpdBsL6fZBT71sFsWlbxqcJohuHY&libraries=places" type="text/javascript"></script>
@@ -46,36 +48,41 @@
   //search for specific places
   var searchBox = new google.maps.places.SearchBox(document.getElementById('placesearch'));
 
+  $('.calulate-distance').click(function() {
   //find distance in km
-  var origin = "ปูนซีเมนต์นครหลวง ตำบล ทับกวาง สระบุรี ประเทศไทย";
-  var destination = document.getElementById("placesearch").value;
+    var origin = "ปูนซีเมนต์นครหลวง ตำบล ทับกวาง สระบุรี ประเทศไทย";
+    var destination = document.getElementById("placesearch").value;
 
-  var service = new google.maps.DistanceMatrixService();
-  service.getDistanceMatrix(
-    {
-      origins: [origin],
-      destinations: [destination],
-      travelMode: google.maps.TravelMode.DRIVING,
+    var service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix(
+      {
+        origins: [origin],
+        destinations: [destination],
+        travelMode: google.maps.TravelMode.DRIVING,
 
-    }, callback);
+      }, callback);
 
-    function callback(response, status) {
-      if (status == google.maps.DistanceMatrixStatus.OK) {
-        var origins = response.originAddresses;
-        var destinations = response.destinationAddresses;
+      function callback(response, status) {
+        if (status == google.maps.DistanceMatrixStatus.OK) {
+          var origins = response.originAddresses;
+          var destinations = response.destinationAddresses;
 
-        for (var i = 0; i < origins.length; i++) {
-          var results = response.rows[i].elements;
-          for (var j = 0; j < results.length; j++) {
-            var element = results[j];
-            var distance = element.distance.text;
-            var duration = element.duration.text;
-            var from = origins[i];
-            var to = destinations[j];
-        console.log(distance);
-        console.log(duration);
+          for (var i = 0; i < origins.length; i++) {
+            var results = response.rows[i].elements;
+            for (var j = 0; j < results.length; j++) {
+              var element = results[j];
+              var distance = element.distance.text;
+              var duration = element.duration.text;
+              var from = origins[i];
+              var to = destinations[j];
+      document.getElementById("distance").value = distance;
+          console.log(distance);
+          console.log(duration);
+          console.log(element);
+
+            }
           }
         }
       }
-    }
+    });
   </script>
