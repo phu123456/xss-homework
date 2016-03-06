@@ -5,7 +5,7 @@ Follow this guide => [https://github.com/plataformatec/devise]()
 After generate User devise
  
 ```bash
-$ rails g scffold Blogs content:text user:references 
+$ rails g scaffold Blogs content:text user:references 
 $ rake db:migrate
 ```
 Go to application_controller.rb then add content below to force user to login first
@@ -18,6 +18,7 @@ Change Code to following box below
  
 Type ```<script>window.alert("sometext")</script>``` in comment box
 
+Then login with another accout and try to read those comment which will show alert bar from another user that comment in javascript. However, there are differences between what types server read message as.
 
 1.Original
 
